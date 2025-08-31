@@ -110,17 +110,10 @@ jobs:
   build_docker_image_and_pull:
 
     runs-on: self-hosted
-    needs: test
+    needs: build_sonar_scan
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: maven
-
     - name: download jar artifact
       uses: actions/download-artifact@v4
       with:
@@ -135,14 +128,14 @@ jobs:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
       
-    -  name: Set up Docker Buildx
-       uses: docker/setup-buildx-action@v3
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
       
-    -  name: Build and push
-       uses: docker/build-push-action@v6
-       with:
-          push: true
-          tags: jasraj23/bankapp:latest
+    - name: Build and push
+      uses: docker/build-push-action@v6
+      with:
+        push: true
+        tags: jasraj23/bankapp:latest
         
         
 
