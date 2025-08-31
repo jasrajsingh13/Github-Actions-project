@@ -19,7 +19,7 @@ jobs:
         cache: maven
     - name: apt update
       run: sudo apt update -y
-    - name: Installl mvn 
+    - name: Install mvn 
       run: sudo apt install maven -y
     - name: Build with Maven
       run: mvn compile
@@ -49,6 +49,22 @@ jobs:
 
     - name: Gitleaks code scan
       run: gitleaks detect source . -r gitleaks-repo.json -f json
+
+  test:
+    runs-on: self-hosted
+    needs: security-checks
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    
+    - name: Unit test cases
+      run: mvn test
 
      
 
