@@ -141,6 +141,8 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v6
       with:
+        context: .
+        file: ./Dockerfile
         push: true
         tags: jasraj23/bankapp:latest
         
